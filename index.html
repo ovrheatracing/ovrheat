@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Ovrheat Racing - F1 in Schools STEM Racing India 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1A1A1A;
+            --glass-bg: rgba(26, 26, 26, 0.4);
+            --glass-border: rgba(201, 168, 76, 0.15);
+            --text-primary: #FFFFFF;
+            --text-secondary: #b8b8b8;
+            --accent-gold: #C9A84C;
+            --accent-light-gold: #E5C56A;
+            --accent-dark-gold: #A88B3D;
+            --shadow-color: rgba(201, 168, 76, 0.2);
+            --neo-light: rgba(255, 255, 255, 0.04);
+            --neo-dark: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: screen;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(201, 168, 76, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(229, 197, 106, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(168, 139, 61, 0.04) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-5%, 5%) scale(1.1); }
+            66% { transform: translate(5%, -5%) scale(0.9); }
+        }
+
+        .noise {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .scroll-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(0px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.9);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 1rem 4rem;
+        }
+
+        .logo-container {
+            position: relative;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo-container img {
+            height: 100%;
+            width: auto;
+            filter: drop-shadow(0 4px 12px rgba(201, 168, 76, 0.4));
+            transition: all 0.4s ease;
+        }
+
+        .logo-container:hover img {
+            filter: drop-shadow(0 6px 16px rgba(201, 168, 76, 0.6));
+            transform: translateY(-2px);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-light-gold));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            margin-bottom: 2rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--bg-primary);
+            background: var(--accent-gold);
+            border-radius: 50px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 40px rgba(201, 168, 76, 0.4);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--accent-gold) 50%, var(--accent-light-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.4s;
+        }
+
+        .hero-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 3rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.6s;
+        }
+
+        .countdown-container {
+            margin: 3rem 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+
+        .countdown-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        .hero-nav {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1s;
+        }
+
+        .hero-nav a {
+            padding: 0.8rem 1.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            text-decoration: none;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .hero-nav a:hover {
+            color: var(--bg-primary);
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .scroll-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .scroll-arrow::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            animation: scrollAnimation 2s ease infinite;
+        }
+
+        @keyframes scrollAnimation {
+            0% { top: 10px; opacity: 1; }
+            100% { top: 30px; opacity: 0; }
+        }
+
+        /* Section Styling */
+        .section {
+            position: relative;
+            padding: 8rem 4rem;
+            background: transparent;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            padding: 4rem;
+            margin: 0 auto;
+            max-width: 1400px;
+            box-shadow: 
+                0 20px 80px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 var(--neo-light),
+                inset 0 -1px 0 var(--neo-dark);
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 30px 100px rgba(201, 168, 76, 0.3),
+                inset 0 1px 0 var(--neo-light),
+                inset 0 -1px 0 var(--neo-dark);
+        }
+
+        /* Team Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            position: relative;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(10, 10, 10, 0.9));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(30px);
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 25px 70px rgba(201, 168, 76, 0.4);
+        }
+
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-light-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 3px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(201, 168, 76, 0.3);
+        }
+
+        .team-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .team-bio {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Car Showcase */
+        .car-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .car-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(10, 10, 10, 0.9));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .car-image::after {
+            content: 'CAR RENDER COMING SOON';
+            position: absolute;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+
+        .car-specs {
+            list-style: none;
+        }
+
+        .car-specs li {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spec-label {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .spec-value {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-gold), transparent);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+        }
+
+        .timeline-date {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Sponsor Cards */
+        .sponsor-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .sponsor-card {
+            padding: 3rem 2.5rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(10, 10, 10, 0.9));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(30px);
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .sponsor-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 20px 60px rgba(201, 168, 76, 0.4);
+        }
+
+        .sponsor-logo {
+            width: 100%;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .sponsor-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .sponsor-tier {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .sponsor-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Tiers Grid */
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .tier-card {
+            padding: 2.5rem 2rem;
+            background: rgba(201, 168, 76, 0.05);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+
+        .tier-card:hover {
+            background: rgba(201, 168, 76, 0.1);
+            border-color: var(--accent-gold);
+            transform: translateY(-8px);
+        }
+
+        .tier-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .tier-amount {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-benefits {
+            list-style: none;
+        }
+
+        .tier-benefits li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tier-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(30px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--bg-primary);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-light-gold));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 168, 76, 0.4);
+        }
+
+        /* Pillars */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .pillar-card {
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(10, 10, 10, 0.9));
+            border-radius: 24px;
+            border-left: 4px solid var(--accent-gold);
+            backdrop-filter: blur(30px);
+            transition: all 0.4s ease;
+        }
+
+        .pillar-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 60px rgba(201, 168, 76, 0.3);
+        }
+
+        .pillar-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pillar-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .pillar-items {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .pillar-items li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pillar-items li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
+        /* Blog/News */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .blog-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(10, 10, 10, 0.9));
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 20px 60px rgba(201, 168, 76, 0.3);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.2), rgba(168, 139, 61, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-category {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            padding: 5rem 4rem 3rem;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(40px);
+            border-top: 1px solid var(--glass-border);
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .sponsor-logos-row {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            margin: 2rem 0;
+        }
+
+        .sponsor-logo-small {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .car-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 2rem;
+            }
+
+            .section {
+                padding: 5rem 2rem;
+            }
+
+            .glass-card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                padding: 1rem 1.5rem;
+                min-width: 80px;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .hero-nav {
+                gap: 1rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .sponsor-logos-row {
+                flex-direction: column;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                padding-left: 3rem;
+            }
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Video Embed */
+        .video-embed {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 2rem 0;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid var(--glass-border);
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-glow"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+        <div class="noise"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo-container">
+            <img src="logo.png" alt="Team Ovrheat Racing Logo">
+        </div>
+        <nav>
+            <a href="#about">Team</a>
+            <a href="#car">The Car</a>
+            <a href="#sponsorship">Sponsorship</a>
+            <a href="#sustainability">Sustainability</a>
+            <a href="#news">News</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="scroll-container">
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-content">
+                <div class="hero-badge">F1 in Schools · STEM Racing India 2026</div>
+                <div style="margin-bottom: 2rem; opacity: 0; animation: fadeInUp 1s ease forwards 0.3s;">
+                    <img src="logo.png" alt="Team Ovrheat Racing Logo" style="height: 180px; filter: drop-shadow(0 10px 30px rgba(201, 168, 76, 0.5));">
+                </div>
+                <h1 class="hero-title">TEAM<br>OVRHEAT</h1>
+                <div class="hero-tagline">PUSH BEYOND LIMITS</div>
+                
+                <div class="countdown-container">
+                    <div class="countdown-title">Competition Countdown</div>
+                    <div class="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="days">00</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="hours">00</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="minutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="seconds">00</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-nav">
+                    <a href="#about">About the Team</a>
+                    <a href="#car">The Car</a>
+                    <a href="#sponsorship">Become a Sponsor</a>
+                    <a href="#contact">Get in Touch</a>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span class="scroll-text">Scroll</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- About the Team Section -->
+        <section id="about" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Who We Are</div>
+                <h2 class="section-title">About Team Ovrheat</h2>
+                <p class="section-subtitle">
+                    Team Ovrheat Racing is a student-led engineering team from The Ardee School, New Delhi, competing in the F1 in Schools STEM Racing Competition. We combine performance engineering with enterprise innovation and professional project management.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">Our Story</h3>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                    The name "Ovrheat" reflects our philosophy of "overheating effort" — committing relentless energy, creativity, and precision into every aspect of our work. From aerodynamic optimization and manufacturing to branding and sponsorship outreach, we strive to exceed expectations through constant iteration and improvement.
+                </p>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                    We embrace the identity of the "dark horses." Rather than relying on reputation alone, our focus is on disciplined preparation, innovative thinking, and strategic execution to break through expectations and compete at the highest level.
+                </p>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8;">
+                    As a team, we represent the next generation of engineers and innovators: individuals who combine technical excellence, creativity, and professional collaboration to transform ambitious ideas into real performance.
+                </p>
+            </div>
+
+            <div style="margin-top: 4rem;">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 2rem; text-align: center;">Meet the Team</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-photo">👤</div>
+                        <h4 class="team-name">Maulik Mittal</h4>
+                        <div class="team-role">Project Manager</div>
+                        <p class="team-bio">Leading the team with vision, coordinating all aspects from engineering to enterprise.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-photo">👤</div>
+                        <h4 class="team-name">Idhaant Singh</h4>
+                        <div class="team-role">Design Engineer</div>
+                        <p class="team-bio">CAD design wizard, aerodynamics specialist, pushing the limits of performance.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-photo">👤</div>
+                        <h4 class="team-name">Vivann Bhatia</h4>
+                        <div class="team-role">Manufacturing Engineer</div>
+                        <p class="team-bio">Precision manufacturing expert, turning designs into reality with CNC mastery.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-photo">👤</div>
+                        <h4 class="team-name">Sahil Chandra</h4>
+                        <div class="team-role">Enterprise Manager</div>
+                        <p class="team-bio">Driving sponsorship strategy, marketing campaigns, and professional communications.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-photo">👤</div>
+                        <h4 class="team-name">Iyaan Anand</h4>
+                        <div class="team-role">Graphic Designer</div>
+                        <p class="team-bio">Brand identity creator, visual storyteller, making Ovrheat unforgettable.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 4rem; text-align: center;">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;">What is F1 in Schools?</h3>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 0 auto;">
+                    F1 in Schools is a global STEM racing competition where student teams design, manufacture, test, and race miniature Formula 1 cars powered by CO2 cartridges. Beyond engineering, teams develop enterprise skills including sponsorship acquisition, marketing, and professional project management. It's the ultimate combination of performance engineering and real-world business excellence.
+                </p>
+            </div>
+        </section>
+
+        <!-- The Car Section -->
+        <section id="car" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Engineering Excellence</div>
+                <h2 class="section-title">The Car</h2>
+                <p class="section-subtitle">
+                    Every curve, every surface, every design decision is optimized for one thing: speed. Our car represents countless hours of CAD modeling, CFD simulation, and iterative refinement.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">Design Philosophy</h3>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                    Our design balances aerodynamic efficiency with structural integrity. Using advanced CAD software and computational fluid dynamics (CFD), we've optimized every millimeter to reduce drag and maximize straight-line speed while maintaining stability through turns.
+                </p>
+
+                <div class="car-showcase">
+                    <div class="car-image">🏎️</div>
+                    <div>
+                        <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Technical Specifications</h4>
+                        <ul class="car-specs">
+                            <li>
+                                <span class="spec-label">Length</span>
+                                <span class="spec-value">210mm</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Material</span>
+                                <span class="spec-value">Balsa Wood</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Weight</span>
+                                <span class="spec-value">TBD (Post-CNC)</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Drag Coefficient</span>
+                                <span class="spec-value">0.XXX (Target)</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Propulsion</span>
+                                <span class="spec-value">CO2 Cartridge</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem;">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 2rem; text-align: center;">Build Diary</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">December 2025</div>
+                            <h4 class="timeline-title">Concept & Initial Design</h4>
+                            <p class="timeline-desc">Brainstorming aerodynamic concepts, researching past winners, establishing design principles and team roles.</p>
+                        </div>
+                        <div style="flex: 1;"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">January 2026</div>
+                            <h4 class="timeline-title">CAD Development</h4>
+                            <p class="timeline-desc">Creating detailed 3D models in CAD software, running initial CFD simulations, iterating on design based on aerodynamic data.</p>
+                        </div>
+                        <div style="flex: 1;"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">February 2026</div>
+                            <h4 class="timeline-title">Final Design & CNC Preparation</h4>
+                            <p class="timeline-desc">Finalizing CAD model, optimizing for manufacturing, preparing CNC toolpaths and material specifications.</p>
+                        </div>
+                        <div style="flex: 1;"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">March 2026</div>
+                            <h4 class="timeline-title">CNC Manufacturing</h4>
+                            <p class="timeline-desc">Precision CNC machining, quality control checks, assembly and finishing work.</p>
+                        </div>
+                        <div style="flex: 1;"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">April 2026</div>
+                            <h4 class="timeline-title">Testing & Competition</h4>
+                            <p class="timeline-desc">Final testing runs, pit display preparation, regional competition day!</p>
+                        </div>
+                        <div style="flex: 1;"></div>
+                    </div>
+                </div>
+
+                <div class="video-embed">
+                    <div class="video-placeholder">CNC BUILD FOOTAGE COMING SOON</div>
+                    <!-- Replace with: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sponsorship Section -->
+        <section id="sponsorship" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Our Partners</div>
+                <h2 class="section-title">Sponsorship</h2>
+                <p class="section-subtitle">
+                    Team Ovrheat is New Delhi's most ambitious F1 in Schools team — blending high-performance engineering with professional enterprise. Our sponsors gain authentic brand association with innovation, precision, and aspiration.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 5rem;">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 2rem; text-align: center;">Our Sponsors</h3>
+                <div class="sponsor-showcase">
+                    <div class="sponsor-card">
+                        <div class="sponsor-logo"><img src="kreo-logo.png" alt="Kreo Logo" style="max-width: 80%; max-height: 80%; object-fit: contain;"></div>
+                        <h4 class="sponsor-name">Kreo</h4>
+                        <div class="sponsor-tier">Primary Sponsor · ₹30,000</div>
+                        <p class="sponsor-desc">Leading technology partner powering our digital innovation and engineering excellence.</p>
+                    </div>
+                    <div class="sponsor-card">
+                        <div class="sponsor-logo"><img src="mokobara-logo.png" alt="Mokobara Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;"></div>
+                        <h4 class="sponsor-name">Mokobara</h4>
+                        <div class="sponsor-tier">Tertiary Sponsor · ₹10,000</div>
+                        <p class="sponsor-desc">Premium travel brand supporting our journey to excellence and competition success.</p>
+                    </div>
+                    <div class="sponsor-card" style="border: 2px dashed var(--glass-border);">
+                        <div class="sponsor-logo">?</div>
+                        <h4 class="sponsor-name">Your Brand Here</h4>
+                        <div class="sponsor-tier">Secondary Sponsor · ₹20,000</div>
+                        <p class="sponsor-desc">Be part of our story. Join us as we push beyond limits and compete at the highest level.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">Sponsorship Tiers</h3>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    We offer clear, proportional ROI across four sponsorship tiers, delivering authentic brand exposure through car branding, digital reach, pit display integration, and community engagement.
+                </p>
+
+                <div class="tiers-grid">
+                    <div class="tier-card" style="border-color: var(--accent-gold); background: rgba(201, 168, 76, 0.08);">
+                        <div class="tier-name">Primary Sponsor</div>
+                        <div class="tier-amount">₹30,000</div>
+                        <ul class="tier-benefits">
+                            <li>Car logo — hero position, all races</li>
+                            <li>Pit display hero panel (top-centre)</li>
+                            <li>All social channels + bio link</li>
+                            <li>Website front-page feature</li>
+                            <li>Title recognition on all materials</li>
+                            <li>Competition programme listing</li>
+                        </ul>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-name">Secondary Sponsor</div>
+                        <div class="tier-amount">₹20,000</div>
+                        <ul class="tier-benefits">
+                            <li>Car logo — medium position</li>
+                            <li>Uniform — 2 prominent positions</li>
+                            <li>Dedicated pit display panel</li>
+                            <li>Social posts × 4 per month</li>
+                            <li>Website sponsor listing</li>
+                            <li>Programme acknowledgement</li>
+                        </ul>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-name">Tertiary Sponsor</div>
+                        <div class="tier-amount">₹10,000</div>
+                        <ul class="tier-benefits">
+                            <li>Car logo — side panel</li>
+                            <li>Uniform — 1 position</li>
+                            <li>Pit display logo placement</li>
+                            <li>Social posts × 2 per month</li>
+                            <li>Website sponsor listing</li>
+                        </ul>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-name">Community Sponsor</div>
+                        <div class="tier-amount">₹5,000+</div>
+                        <ul class="tier-benefits">
+                            <li>Social media feature post</li>
+                            <li>Website acknowledgement</li>
+                            <li>Event day recognition</li>
+                            <li>Certificate of partnership</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="#contact-sponsor" style="display: inline-block; padding: 1.2rem 3rem; font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--bg-primary); background: linear-gradient(135deg, var(--accent-gold), var(--accent-light-gold)); border-radius: 12px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">Partner With Us</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enterprise & Marketing Section -->
+        <section id="enterprise" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Professional Excellence</div>
+                <h2 class="section-title">Enterprise & Marketing</h2>
+                <p class="section-subtitle">
+                    Beyond engineering, we operate as a professional enterprise with comprehensive branding, strategic marketing, and measurable impact across multiple channels.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">Brand Guidelines</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--accent-gold); margin-bottom: 1rem;">Color Palette</h4>
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: inline-block; width: 50px; height: 50px; background: #1A1A1A; border-radius: 8px; margin-right: 1rem; vertical-align: middle;"></div>
+                            <span style="color: var(--text-secondary);">Obsidian Black · #1A1A1A</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: inline-block; width: 50px; height: 50px; background: #C9A84C; border-radius: 8px; margin-right: 1rem; vertical-align: middle;"></div>
+                            <span style="color: var(--text-secondary);">Championship Gold · #C9A84C</span>
+                        </div>
+                        <div>
+                            <div style="display: inline-block; width: 50px; height: 50px; background: #FFFFFF; border-radius: 8px; margin-right: 1rem; vertical-align: middle; border: 1px solid var(--glass-border);"></div>
+                            <span style="color: var(--text-secondary);">Racing White · #FFFFFF</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--accent-gold); margin-bottom: 1rem;">Typography</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.8rem;"><strong style="font-family: 'Poppins', sans-serif; color: var(--accent-gold);">Poppins</strong> — Display & Headers</p>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">Geometric, modern, commanding attention</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.8rem;"><strong style="color: var(--accent-gold);">Lora</strong> — Body Copy</p>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Elegant serif, authoritative, readable</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem; padding: 2rem; background: rgba(201, 168, 76, 0.05); border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; text-align: center;">Sub-Brands</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔥</div>
+                            <h5 style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.5rem;">Ovrheat Inspire</h5>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Igniting STEM passion through talks and demonstrations</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌱</div>
+                            <h5 style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.5rem;">Ovrheat Eco</h5>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Championing sustainable innovation and charity</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
+                            <h5 style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.5rem;">Ovrheat Driven</h5>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Showcasing engineering excellence and performance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sustainability Section -->
+        <section id="sustainability" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Responsible Innovation</div>
+                <h2 class="section-title">Sustainability</h2>
+                <p class="section-subtitle">
+                    Sustainability is not a box-tick for Team Ovrheat — it is embedded in every decision we make. Our three-pillar framework ensures we compete responsibly and leave a meaningful legacy.
+                </p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">🌍</div>
+                    <h3 class="pillar-title">Environmental</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">Minimizing our footprint at every stage of design, manufacturing, and competition.</p>
+                    <ul class="pillar-items">
+                        <li>CNC waste target ≤15% through optimized design</li>
+                        <li>100% recycled pit display materials</li>
+                        <li>Digital-first operations (zero internal print)</li>
+                        <li>Local sourcing within Delhi NCR</li>
+                        <li>Lightweight engineering reduces material use</li>
+                    </ul>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">🎓</div>
+                    <h3 class="pillar-title">Social</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">Inspiring the next generation of engineers through education and community engagement.</p>
+                    <ul class="pillar-items">
+                        <li>Full-school keynote to 600+ students</li>
+                        <li>Curriculum integration (Physics, Math, DT)</li>
+                        <li>Peer mentorship for younger students</li>
+                        <li>Diversity & inclusion across recruitment</li>
+                        <li>Open community demonstration days</li>
+                    </ul>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">💰</div>
+                    <h3 class="pillar-title">Economic</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">Financial discipline that protects our mission and ensures long-term sustainability.</p>
+                    <ul class="pillar-items">
+                        <li>Weekly budget review and variance tracking</li>
+                        <li>In-kind sponsorship to reduce cash spend</li>
+                        <li>CNC optimization minimizes re-cuts</li>
+                        <li>Surplus funds ringfenced for nationals</li>
+                        <li>₹300/gram charity commitment integrated</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 4rem;">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">Charity Initiative</h3>
+                <p style="color: var(--text-secondary); font-size: 1.2rem; line-height: 1.8; text-align: center; margin-bottom: 2rem;">
+                    ₹300 per gram of material 3D printed, distributed equally across three impactful NGOs
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div style="text-align: center; padding: 2rem; background: rgba(201, 168, 76, 0.05); border-radius: 16px;">
+                        <div style="font-size: 2.5rem; font-family: 'Poppins', sans-serif; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem;">₹100/g</div>
+                        <div style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text-primary);">Nature Conservancy India</div>
+                    </div>
+                    <div style="text-align: center; padding: 2rem; background: rgba(201, 168, 76, 0.05); border-radius: 16px;">
+                        <div style="font-size: 2.5rem; font-family: 'Poppins', sans-serif; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem;">₹100/g</div>
+                        <div style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text-primary);">WaterAid India</div>
+                    </div>
+                    <div style="text-align: center; padding: 2rem; background: rgba(201, 168, 76, 0.05); border-radius: 16px;">
+                        <div style="font-size: 2.5rem; font-family: 'Poppins', sans-serif; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem;">₹100/g</div>
+                        <div style="font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text-primary);">Shuddhi NGO</div>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem; font-style: italic;">
+                    Total donation amount will be calculated upon final car weight confirmation post-manufacturing.
+                </p>
+            </div>
+        </section>
+
+        <!-- Competition Journey Section -->
+        <section id="competition" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Our Journey</div>
+                <h2 class="section-title">Competition Journey</h2>
+                <p class="section-subtitle">
+                    Follow our progress from regional qualifiers to the national stage. Results, photos, and highlights will be updated here as we compete.
+                </p>
+            </div>
+
+            <div class="glass-card" style="text-align: center; padding: 5rem 3rem;">
+                <div style="font-size: 5rem; margin-bottom: 2rem;">🏁</div>
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Competition Results Coming Soon</h3>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+                    This section will be live-updated with regional results, national stage progression tracking, media gallery, and press coverage as our competition journey unfolds.
+                </p>
+            </div>
+        </section>
+
+        <!-- Social Media Section -->
+        <section id="social" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Stay Connected</div>
+                <h2 class="section-title">Follow Our Journey</h2>
+                <p class="section-subtitle">
+                    Join us on social media for behind-the-scenes content, build updates, and competition day highlights.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">📷</div>
+                        <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Instagram</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">@ovrheatracing</p>
+                        <a href="https://instagram.com/ovrheatracing" target="_blank" style="display: inline-block; padding: 0.8rem 2rem; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--bg-primary); background: var(--accent-gold); border-radius: 50px; text-decoration: none;">Follow Us</a>
+                    </div>
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">💼</div>
+                        <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">LinkedIn</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Team Ovrheat Racing</p>
+                        <a href="#" style="display: inline-block; padding: 0.8rem 2rem; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--bg-primary); background: var(--accent-gold); border-radius: 50px; text-decoration: none;">Connect</a>
+                    </div>
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">▶️</div>
+                        <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">YouTube</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Build Diaries & More</p>
+                        <a href="#" style="display: inline-block; padding: 0.8rem 2rem; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--bg-primary); background: var(--accent-gold); border-radius: 50px; text-decoration: none;">Subscribe</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News/Blog Section -->
+        <section id="news" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Latest Updates</div>
+                <h2 class="section-title">News & Updates</h2>
+                <p class="section-subtitle">
+                    Stay updated with our latest milestones, sponsor announcements, and competition news.
+                </p>
+            </div>
+
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">📰</div>
+                    <div class="blog-content">
+                        <div class="blog-category">Sponsorship</div>
+                        <h3 class="blog-title">Kreo Joins as Primary Sponsor</h3>
+                        <div class="blog-date">January 15, 2026</div>
+                        <p class="blog-excerpt">We're thrilled to announce Kreo as our Primary Sponsor, supporting our engineering and digital innovation journey with ₹30,000.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">🔧</div>
+                    <div class="blog-content">
+                        <div class="blog-category">Engineering</div>
+                        <h3 class="blog-title">CAD Design Phase Complete</h3>
+                        <div class="blog-date">February 1, 2026</div>
+                        <p class="blog-excerpt">After weeks of CFD simulations and iterative refinement, our final CAD model is complete and ready for CNC manufacturing.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">🌱</div>
+                    <div class="blog-content">
+                        <div class="blog-category">Sustainability</div>
+                        <h3 class="blog-title">Charity Initiative Launch</h3>
+                        <div class="blog-date">February 10, 2026</div>
+                        <p class="blog-excerpt">Announcing our ₹300/gram charity commitment supporting Nature Conservancy India, WaterAid India, and Shuddhi NGO.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section reveal">
+            <div class="section-header">
+                <div class="section-tag">Get in Touch</div>
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">
+                    Have questions? Want to become a sponsor? We'd love to hear from you.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto;">
+                <div class="contact-form">
+                    <h3 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-gold);">General Enquiries</h3>
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-input" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-textarea" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="contact-form" id="contact-sponsor">
+                    <h3 style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-gold);">Sponsor Enquiries</h3>
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" placeholder="Your company" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contact Email</label>
+                            <input type="email" class="form-input" placeholder="company@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Interested Tier</label>
+                            <select class="form-input" required>
+                                <option value="">Select a tier</option>
+                                <option value="primary">Primary (₹30,000)</option>
+                                <option value="secondary">Secondary (₹20,000)</option>
+                                <option value="tertiary">Tertiary (₹10,000)</option>
+                                <option value="community">Community (₹5,000+)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-textarea" placeholder="Tell us about your interest..." required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Submit Enquiry</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 4rem; text-align: center;">
+                <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;">School Affiliation</h4>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">The Ardee School</p>
+                <p style="color: var(--text-secondary); font-size: 1rem;">New Delhi, India</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <img src="logo.png" alt="Ovrheat Logo" style="height: 60px; filter: drop-shadow(0 4px 12px rgba(201, 168, 76, 0.3));">
+                            <h3 style="margin: 0;">OVRHEAT</h3>
+                        </div>
+                        <p>Student-led F1 in Schools racing team from The Ardee School, New Delhi. Pushing beyond limits through performance engineering and professional enterprise.</p>
+                        <div class="social-links">
+                            <a href="https://instagram.com/ovrheatracing" class="social-link" target="_blank">📷</a>
+                            <a href="#" class="social-link">💼</a>
+                            <a href="#" class="social-link">▶️</a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="#about">About the Team</a></li>
+                            <li><a href="#car">The Car</a></li>
+                            <li><a href="#sponsorship">Sponsorship</a></li>
+                            <li><a href="#sustainability">Sustainability</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul class="footer-links">
+                            <li><a href="#enterprise">Brand Guidelines</a></li>
+                            <li><a href="#news">Latest News</a></li>
+                            <li><a href="#competition">Competition Updates</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Connect</h4>
+                        <ul class="footer-links">
+                            <li><a href="https://instagram.com/ovrheatracing" target="_blank">Instagram</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">YouTube</a></li>
+                            <li><a href="mailto:ovrheatracing@gmail.com">Email Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+                <div class="footer-bottom">
+                    <p><strong>F1 in Schools · STEM Racing India 2026</strong></p>
+                    <p>The Ardee School, New Delhi</p>
+                    <p style="margin-top: 1rem; opacity: 0.7;">© 2026 Team Ovrheat Racing. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorGlow = document.getElementById('cursor-glow');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            cursorGlow.style.left = e.clientX - 100 + 'px';
+            cursorGlow.style.top = e.clientY - 100 + 'px';
+        });
+
+        // Enhanced cursor on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .glass-card, .team-card, .sponsor-card, .blog-card, input, textarea, select');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.opacity = '0.8';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.opacity = '1';
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Parallax Effect
+        const hero = document.getElementById('hero');
+        const sections = document.querySelectorAll('.section');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroHeight = hero.offsetHeight;
+            
+            // Parallax for hero content
+            const heroContent = hero.querySelector('.hero-content');
+            const heroOpacity = 1 - (scrolled / heroHeight) * 1.5;
+            const heroTransform = scrolled * 0.5;
+            
+            heroContent.style.transform = `translateY(${heroTransform}px)`;
+            heroContent.style.opacity = Math.max(0, heroOpacity);
+            
+            // Sections scroll over hero with parallax
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const windowHeight = window.innerHeight;
+                
+                if (scrolled + windowHeight > sectionTop) {
+                    const sectionScroll = (scrolled + windowHeight - sectionTop) / windowHeight;
+                    const parallaxOffset = Math.max(0, (1 - sectionScroll) * 50);
+                    section.style.transform = `translateY(-${parallaxOffset}px)`;
+                }
+            });
+        });
+
+        // Reveal on Scroll
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Dynamic lighting effect
+        const bgGradient = document.querySelector('.bg-gradient');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            bgGradient.style.background = `
+                radial-gradient(circle at ${x}% ${y}%, rgba(201, 168, 76, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at ${100-x}% ${100-y}%, rgba(229, 197, 106, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(168, 139, 61, 0.04) 0%, transparent 50%)
+            `;
+        });
+
+        // Countdown Timer
+        const countdownDate = new Date('April 15, 2026 09:00:00').getTime();
+        
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            
+            if (distance < 0) {
+                document.querySelector('.countdown-container').innerHTML = '<div class="countdown-title">COMPETITION DAY!</div>';
+            }
+        };
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Form Submission (placeholder - connect to your backend)
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you soon.');
+                form.reset();
+            });
+        });
+    </script>
+</body>
+</html>
