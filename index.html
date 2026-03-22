@@ -407,14 +407,14 @@
         /* Section Styling */
         .section {
             position: relative;
-            padding: 8rem 4rem;
+            padding: 6rem 4rem;
             background: transparent;
             z-index: 2;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         .section-tag {
@@ -425,6 +425,18 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-tag::before,
+        .section-tag::after {
+            content: '';
+            display: inline-block;
+            width: 2rem;
+            height: 1px;
+            background: var(--accent-gold);
+            opacity: 0.6;
         }
 
         .section-title {
@@ -436,6 +448,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
         }
 
         .section-subtitle {
@@ -1119,7 +1132,7 @@
             }
 
             .section {
-                padding: 5rem 2rem;
+                padding: 4rem 1.5rem;
             }
 
             .glass-card {
@@ -1241,7 +1254,7 @@
         <!-- Hero Section -->
         <section id="hero">
             <div class="hero-content">
-                <div class="hero-badge">Stem Racing · STEM Racing India 2026</div>
+                <div class="hero-badge">STEM Racing India 2026 · The Ardee School, New Delhi</div>
                 <div style="margin-bottom: 2rem; opacity: 0; animation: fadeInUp 1s ease forwards 0.3s;">
                     <img src="logo.png" alt="Team Ovrheat Racing Logo" style="height: 180px; filter: drop-shadow(0 10px 30px rgba(201, 168, 76, 0.5));">
                 </div>
@@ -1346,7 +1359,7 @@
             <div class="glass-card" style="margin-top: 4rem; text-align: center;">
                 <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;">What is Stem Racing?</h3>
                 <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 0 auto;">
-                    Stem Racing is a global STEM racing competition where student teams design, manufacture, test, and race miniature Formula 1 cars powered by CO2 cartridges. Beyond engineering, teams develop enterprise skills including sponsorship acquisition, marketing, and professional project management. It's the ultimate combination of performance engineering and real-world business excellence.
+                    Stem Racing is a global competition where student teams design, manufacture, test, and race miniature Formula 1 cars powered by CO2 cartridges. Beyond engineering, teams build real enterprise skills — from sponsorship and marketing to project management. Performance engineering meets real-world business.
                 </p>
             </div>
         </section>
@@ -1475,7 +1488,7 @@
                         <div class="sponsor-logo">?</div>
                         <h4 class="sponsor-name">Your Brand Here</h4>
                         <div class="sponsor-tier">Secondary Sponsor · ₹20,000</div>
-                        <p class="sponsor-desc">Be part of our story. Join us as we performance over perception and compete at the highest level.</p>
+                        <p class="sponsor-desc">Be part of our story. Join us. Perform over perception. Compete and win at the highest level.</p>
                     </div>
                 </div>
             </div>
@@ -1483,7 +1496,7 @@
             <div class="glass-card">
                 <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">Sponsorship Tiers</h3>
                 <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    We offer clear, proportional ROI across four sponsorship tiers, delivering authentic brand exposure through car branding, digital reach, pit display integration, and community engagement.
+                    We offer clear, proportional value across four sponsorship tiers — from car branding and pit display visibility to digital reach and community presence. Built different. Built to perform.
                 </p>
 
                 <div class="tiers-grid">
@@ -1681,13 +1694,13 @@
                 <div class="section-tag">Our Journey</div>
                 <h2 class="section-title">Competition Journey</h2>
                 <p class="section-subtitle">
-                    Follow our progress from regional qualifiers to the national stage. Results, photos, and highlights will be updated here as we compete.
+                    Follow our progress from regional qualifiers to the national stage. Race day is approaching. Results, photos, and highlights will be updated here in real time as we compete.
                 </p>
             </div>
 
             <div class="glass-card" style="text-align: center; padding: 5rem 3rem;">
                 <div style="font-size: 5rem; margin-bottom: 2rem;">🏁</div>
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Competition Results Coming Soon</h3>
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Competition Results</h3>
                 <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
                     This section will be live-updated with regional results, national stage progression tracking, media gallery, and press coverage as our competition journey unfolds.
                 </p>
@@ -1698,7 +1711,7 @@
         <section id="social" class="section reveal">
             <div class="section-header">
                 <div class="section-tag">Stay Connected</div>
-                <h2 class="section-title">Follow Our Journey</h2>
+                <h2 class="section-title">Track the Build</h2>
                 <p class="section-subtitle">
                     Join us on social media for behind-the-scenes content, build updates, and competition day highlights.
                 </p>
@@ -1845,11 +1858,11 @@
                             <img src="logo.png" alt="Ovrheat Logo" style="height: 60px; filter: drop-shadow(0 4px 12px rgba(201, 168, 76, 0.3));">
                             <h3 style="margin: 0;">OVRHEAT</h3>
                         </div>
-                        <p>Student-led Stem Racing racing team from The Ardee School, New Delhi. Pushing beyond limits through performance engineering and professional enterprise.</p>
+                        <p>Student-led Stem Racing racing team from The Ardee School, New Delhi. Performance over perception. Built to compete. Built to win.</p>
                         <div class="social-links">
                             <a href="https://instagram.com/ovrheatracing" class="social-link" target="_blank">📷</a>
-                            <a href="#" class="social-link">💼</a>
-                            <a href="#" class="social-link">▶️</a>
+                            
+                            <a href="https://www.youtube.com/@ovrheatracing" class="social-link" target="_blank" aria-label="YouTube">▶️</a>
                         </div>
                     </div>
                     
@@ -1878,7 +1891,7 @@
                         <ul class="footer-links">
                             <li><a href="https://instagram.com/ovrheatracing" target="_blank">Instagram</a></li>
                             
-                            <li><a href="#">YouTube</a></li>
+                            <li><a href="https://www.youtube.com/@ovrheatracing" target="_blank">YouTube</a></li>
                             <li><a href="mailto:ovrheatracing@gmail.com">Email Us</a></li>
                         </ul>
                     </div>
